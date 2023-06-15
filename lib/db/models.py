@@ -1,5 +1,6 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship, backref
 
 Base = declarative_base()
 
@@ -12,6 +13,8 @@ class Player(Base):
     role = Column(String())
     exp = Column(Integer())
     skin = Column(String())
+
+    servers = relationship("Server", backref=backref("player"))
 
     def __repr__(self):
         return f"User name: {self.user_name}" + \
@@ -26,6 +29,8 @@ class Server(Base):
 
     server_name = Column(String())
     server_ip = (Integer())
+
+    player_id = Column(Integer(), ForeignKey("players.id"))
 
     def __repr__(self):
         return f"Server: {self.id}" + \
