@@ -28,9 +28,10 @@ class Server(Base):
     id = Column(Integer(), primary_key=True)
 
     server_name = Column(String())
-    server_ip = (Integer())
+    server_ip = Column(Integer())
 
-    player_id = Column(Integer(), ForeignKey("players.id"))
+    player_id= Column(Integer(), ForeignKey("players.id"))
+    world_id = Column(Integer(), ForeignKey("worlds.id"))
 
     def __repr__(self):
         return f"Server: {self.id}" + \
@@ -46,6 +47,8 @@ class Worlds(Base):
     seed = Column(Integer())
     spawn = Column(Integer())
     player_count = Column(Integer())
+
+    servers = relationship("Server", backref=backref("world"))
 
     def __repr__(self):
         return f"World: {self.id}" + \
