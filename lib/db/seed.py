@@ -34,13 +34,33 @@ if __name__ == '__main__':
     worlds = []
     for i in range(5):
         world = World(
-            name=fake.unique.name(),
+            name=fake.name(),
             seed=random.randint(100000, 999999),
-            spawn=[f"x:{random.randint(-100, 100)}", f"y:{random.randint(-100, 100)}", f"z:{random.randint(-100, 100)}"],
-            player_count=random.randint(1, 30)
+            spawn=random.randint(-100, 100),
+            player_count=random.randint(2, 8)
         )
 
         session.add(world)
         session.commit()
 
         worlds.append(world)
+
+    servers = []
+    server_names=["tm.mc-complex.com", "rln.rocks"]
+    for world in worlds:
+        for i in range(world.player_count):
+            player = random.choice(players)
+            server_name = random.choice(server_names)
+
+            server = Server(
+                server_name=server_name,
+                server_ip=(server_names.index(server_name) + 38490),
+                player_id=player.id,
+                world_id=world.id
+            )
+            
+            servers.append(server)
+
+    session.bulk_save_objects(servers)
+    session.commit()
+    session.close()

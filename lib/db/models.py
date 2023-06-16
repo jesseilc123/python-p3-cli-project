@@ -15,8 +15,8 @@ class Player(Base):
     exp = Column(Integer())
     skin = Column(String())
 
-    servers = relationship("Server", back_populates="player")
-    worlds = association_proxy("servers", "worlds", creator=lambda wrld: Server(world=wrld))
+    servers = relationship("Server", back_populates="player", cascade="all, delete-orphan")
+    worlds = association_proxy("servers", "world", creator=lambda wrld: Server(world=wrld))
 
     def __repr__(self):
         return f"Player(id={self.id}, " + \
@@ -56,8 +56,8 @@ class World(Base):
     spawn = Column(Integer())
     player_count = Column(Integer())
 
-    servers = relationship("Server", back_populates="world")
-    players = association_proxy("servers", "worlds", creator=lambda plyr: Server(player=plyr))
+    servers = relationship("Server", back_populates="world", cascade="all, delete-orphan")
+    players = association_proxy("servers", "player", creator=lambda plyr: Server(player=plyr))
 
     def __repr__(self):
         return f"World(id={self.id}, " + \
