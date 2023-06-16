@@ -1,6 +1,7 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy.orm import relationship
+from sqlalchemy.ext.associationproxy import association_proxy
 
 Base = declarative_base()
 
@@ -14,13 +15,15 @@ class Player(Base):
     exp = Column(Integer())
     skin = Column(String())
 
-    servers = relationship("Server", backref=backref("player"))
+    servers = relationship("Server", back_populates="player")
+    worlds = association_proxy("servers", "worlds", creator=lambda wrld: Server(world=wrld))
 
     def __repr__(self):
-        return f"User name: {self.user_name}" + \
-            f"Role: {self.role}" + \
-            f"Experience: {self.exp}" + \
-            f"Skin: {self.skin}"
+        return f"Player(id={self.id}, " + \
+            f"user_name={self.user_name}, " + \
+            f"role={self.role}, " + \
+            f"exp={self.exp}, " + \
+            f"skin={self.skin})"
 
 class Server(Base):
     __tablename__ = "servers"
@@ -30,15 +33,20 @@ class Server(Base):
     server_name = Column(String())
     server_ip = Column(Integer())
 
-    player_id= Column(Integer(), ForeignKey("players.id"))
+    player_id = Column(Integer(), ForeignKey("players.id"))
     world_id = Column(Integer(), ForeignKey("worlds.id"))
 
+    player = relationship("Player", back_populates="servers")
+    world = relationship("World", back_populates="servers")
+
     def __repr__(self):
-        return f"Server: {self.id}" + \
-            f"Server Name: {self.server_name}" + \
-            f"Server IP: {self.server_ip}"
+        return f"Server(id={self.id}, " + \
+            f"server_name={self.server_name}, " + \
+            f"server_ip={self.server_ip}, " + \
+            f"player_id={self.player_id}, " + \
+            f"world_id={self.world_id})"
     
-class Worlds(Base):
+class World(Base):
     __tablename__ = "worlds"
 
     id = Column(Integer(), primary_key=True) 
@@ -48,12 +56,12 @@ class Worlds(Base):
     spawn = Column(Integer())
     player_count = Column(Integer())
 
-    servers = relationship("Server", backref=backref("world"))
+    servers = relationship("Server", back_populates="world")
+    players = association_proxy("servers", "worlds", creator=lambda plyr: Server(player=plyr))
 
     def __repr__(self):
-        return f"World: {self.id}" + \
-            f"Name: {self.name}" + \
-            f"Seed: {self.seed}" + \
-            f"Spawn: {self.spawn}" + \
-            f"Player count: {self.player_count}"
-
+        return f"World(id={self.id}, " + \
+            f"name={self.name}, " + \
+            f"seed={self.seed}, " + \
+            f"spawn={self.spawn}, " + \
+            f"player_count={self.player_count})"

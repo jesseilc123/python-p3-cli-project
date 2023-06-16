@@ -1,0 +1,28 @@
+Test seed with below
+
+    Player
+        player1 = Player(user_name, role, exp, skin)
+        player2 = Player(user_name, role, exp, skin)
+        player3 = Player(user_name, role, exp, skin)
+        player4 = Player(user_name, role, exp, skin)
+        player5 = Player(user_name, role, exp, skin)
+
+        session.query(Player).delete()
+
+    World
+        world1 = World(name, seed, spawn, player_count)
+        world2 = World(name, seed, spawn, player_count)
+        world3 = World(name, seed, spawn, player_count)
+        world4 = World(name, seed, spawn, player_count)
+        world5 = World(name, seed, spawn, player_count)
+
+        session.query(World).delete()
+
+    Server
+        server1 = Server(server_name, server_ip, player_id, world_id)
+        server2 = Server(server_name, server_ip, player_id, world_id)
+        server3 = Server(server_name, server_ip, player_id, world_id)
+        server4 = Server(server_name, server_ip, player_id, world_id)
+        server5 = Server(server_name, server_ip, player_id, world_id)
+
+        session.query(Server).delete()
