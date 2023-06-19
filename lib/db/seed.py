@@ -18,12 +18,14 @@ if __name__ == '__main__':
     fake = Faker()
 
     players = []
-    for i in range(5):
+    roles = ["admin", "player"]
+    skins = ["Dog", "Fish", "Cat", "Axolotl", "Base Skin"]
+    for i in range(30):
         player = Player(
-           user_name=fake.unique.name(),
-           role=fake.unique.name(),
-           exp=random.randint(1, 30),
-           skin=fake.unique.name()
+            user_name=fake.unique.name(),
+            role=random.choice(roles),
+            exp=random.randint(1, 30),
+            skin=random.choice(skins)
         )
 
         session.add(player)
@@ -32,14 +34,15 @@ if __name__ == '__main__':
         players.append(player)
 
     worlds = []
-    for i in range(5):
+    for i in range(15):
         world = World(
-            name=fake.name(),
+            name=fake.country(),
             seed=random.randint(100000, 999999),
             spawn=random.randint(-100, 100),
             player_count=random.randint(2, 8)
         )
 
+        print(world)
         session.add(world)
         session.commit()
 
