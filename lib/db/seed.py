@@ -34,15 +34,20 @@ if __name__ == '__main__':
         players.append(player)
 
     worlds = []
-    for i in range(15):
+    world_names = [
+        "Infested", "Funland 3", "Minechester City", "Celestial Castle", "Mega Sky Grid,"
+        "Wild West", "11 Ways To Die", "Raft Survival", "The Maze Runner Trails", 
+        "Communicate 2", "Amberlight City Apocalypse", "A Modern House", "Star Wars Space World",
+        "Escape Room", "Diamond Sword RPG", "Skyblock Luckyblocks"
+        ]
+    for name in world_names:
         world = World(
-            name=fake.country(),
+            name=name,
             seed=random.randint(100000, 999999),
             spawn=random.randint(-100, 100),
             player_count=random.randint(2, 8)
         )
 
-        print(world)
         session.add(world)
         session.commit()
 
