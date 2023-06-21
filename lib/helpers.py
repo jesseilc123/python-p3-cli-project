@@ -9,40 +9,41 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 def main_menu():
-    choice = 0
-    print("***Enter the corresponding number***")
+    choice = ""
     print("1) Player menu")
     print("2) World menu")
     print("3) Server menu")
     print("4) Exit")
 
-    while choice !=4:
-        choice = int(input())
-        if choice == 1:
+    while choice != "4":
+        choice = input("Enter the corresponding number: ")
+        if choice == "1":
             sub_menu("player", Player)
-        if choice == 2:
+        if choice == "2":
             sub_menu("world", World)
-        if choice == 3:
+        if choice == "3":
             sub_menu("server", Server)
-        if choice == 4:
+        if choice == "4":
             print("Quiting Program...")
+        else:
+            print("!!Input was invalid please try again!!")
     print("Program Terminated")
     quit()
 
 def sub_menu(category, data_list):
-    sub_choice = 0
-    while sub_choice != 4:
+    sub_choice = ""
+    while sub_choice != "4":
         print(f"***{category.title()} Menu***")
         print(f"1) Display all {category}s")
         print(f"2) Lookup {category} by Name")
         print(f"3) Add a {category}")
         print("4) Back to Main Menu")
-        sub_choice = int(input())
+        sub_choice = input("Enter the corresponding number: ")
 
-        if sub_choice == 1:
+        if sub_choice == "1":
             for data in session.query(data_list).all():
                 print(data)
-        if sub_choice == 2:
+        if sub_choice == "2":
             search_name = input("Please type the name: ")
             if category == "player":
                 player_lookup_list = session.query(data_list).filter(data_list.user_name==search_name).first()
@@ -60,15 +61,17 @@ def sub_menu(category, data_list):
                 server_lookup_list = session.query(data_list).filter(data_list.server_name==search_name).all()
                 for server in server_lookup_list:
                     print(server)
-        if sub_choice == 3:
+        if sub_choice == "3":
             if category == "player":
                 add_to_player()
             elif category == "world":
                 add_to_world()
             elif category == "server":
                 add_to_server()
-        if sub_choice == 4:
-            print("test for back")
+        if sub_choice == "4":
+            print("Heading back...")
+        else:
+            print("!!Input was invalid please try again!!")
     main_menu()
 
 def add_to_player():
