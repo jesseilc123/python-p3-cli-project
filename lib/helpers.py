@@ -72,8 +72,10 @@ def loading():
     os.system("clear")
 
 def no_matches_found():
+    print("------------------")
     print("No matches found")
-    time.sleep(1)
+    print("------------------")
+    time.sleep(2)
     os.system("clear")
 
 def invalid_input():
@@ -128,7 +130,7 @@ def search_for_players(data_list, search_name):
         player_relations = input("Would you like to see related worlds or servers? " + \
             "(0=no 1=worlds 2=servers)...")
         if player_relations == "0":
-            loading()
+            os.system("clear")
         elif player_relations == "1":
             loading()
             print("Results: ")
@@ -169,7 +171,7 @@ def search_for_worlds(data_list, search_name):
         world_relations = input("Would you like to see related players or servers? " + \
             "(0=no 1=players 2=servers)...")
         if world_relations == "0":
-            loading()
+            os.system("clear")
         elif world_relations == "1":
             loading()
             print("Results: ")
@@ -208,25 +210,30 @@ def search_for_servers(data_list, search_name):
         server_relations = input("Would you like to see related players or worlds?" + \
             "(0=no 1=players 2=worlds)...")
         if server_relations == "0":
-            loading()
+            os.system("clear")
         elif server_relations == "1":
             loading()
             player_id_server_list = []
 
             for item in session.query(data_list).filter(data_list.server_name==search_name).all():
                 player_id_server_list.append(item.player_id)
-
-            print("Results: ")
-            print("------------------") 
-            for player_id in player_id_server_list:
-                player = session.query(Player).filter(Player.id==player_id).first()
-                print(f"Username: {player.user_name} | " +\
-                    f"Role: {player.role} | " +\
-                    f"Experience: {player.exp} | " +\
-                    f"Skin: {player.skin}")
-            print("------------------")
-            input("Press any key to continue...")
-            os.system("clear")
+            for id in player_id_server_list:
+                check = session.query(Player).filter(Player.id==id).all()
+                if len(check) == 0:
+                    no_matches_found()
+                else:
+                    print("Results: ")
+                    print("------------------") 
+                    for player_id in player_id_server_list:
+                        player = session.query(Player).filter(Player.id==player_id).first()
+                        print(f"Username: {player.user_name} | " +\
+                            f"Role: {player.role} | " +\
+                            f"Experience: {player.exp} | " +\
+                            f"Skin: {player.skin}")
+                    print("------------------")
+                    input("Press any key to continue...")
+                    os.system("clear")
+                    break
         elif server_relations == "2":
             loading()
             world_id_server_list = []
@@ -234,18 +241,23 @@ def search_for_servers(data_list, search_name):
             for item in session.query(data_list).filter(data_list.server_name==search_name).all():
                 if item.world_id not in world_id_server_list:
                     world_id_server_list.append(item.world_id)
-            
-            print("Results: ")
-            print("------------------") 
-            for world_id in world_id_server_list:
-                world = session.query(World).filter(World.id==world_id).first()
-                print(f"Name: {world.name} | " +\
-                    f"Seed: {world.seed} | " +\
-                    f"Spawn: {world.spawn} | " +\
-                    f"Players: {world.player_count}")
-            print("------------------")
-            input("Press any key to continue...")
-            os.system("clear")
+            for id in world_id_server_list:
+                check = session.query(World).filter(World.id==id).all()
+                if len(check) == 0:
+                    no_matches_found()
+                else:
+                    print("Results: ")
+                    print("------------------") 
+                    for world_id in world_id_server_list:
+                        world = session.query(World).filter(World.id==world_id).first()
+                        print(f"Name: {world.name} | " +\
+                            f"Seed: {world.seed} | " +\
+                            f"Spawn: {world.spawn} | " +\
+                            f"Players: {world.player_count}")
+                    print("------------------")
+                    input("Press any key to continue...")
+                    os.system("clear")
+                    break
         else:
             invalid_input()
 
@@ -383,6 +395,11 @@ def add_to_world():
 
 def add_to_server():
     os.system("clear")
+    print("***DISCLAIMER***\n"
+        "If adding a new player or world to an existing server\n"
+        "enter the existing server name and ip address in their\n"
+        "respected fields.\n"
+        "*******************\n")
     while True:
         new_server_name = input("Please enter server name: ")
         if len(new_server_name) == 0:
@@ -433,4 +450,14 @@ def add_to_server():
     session.add(server)
     session.commit()
     
-    print(session.query(Server).order_by(desc(Server.id)).first())
+    print_new_server = session.query(Server).order_by(desc(Server.id)).first()
+    loading()
+    print("Here is your new Server!")
+    print("------------------")
+    print(f"Name: {print_new_server.server_name} | " +\
+        f"IP address: {print_new_server.server_ip} | " +\
+        f"Player ID: {print_new_server.player_id} | " +\
+        f"World ID: {print_new_server.world_id}")
+    print("------------------")
+    input("Press any key to continue...")
+    os.system("clear")
