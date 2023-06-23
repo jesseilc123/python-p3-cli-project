@@ -4,6 +4,7 @@ from helpers import (
     search_for_worlds, search_for_servers, add_to_player,
     add_to_server, add_to_world, logo, closing
     )
+
 from db.models import Player, World, Server
 import os
 import time
@@ -50,7 +51,7 @@ if __name__ == '__main__':
             sub_choice = input("Enter the corresponding number: ")
             if sub_choice == "1":
                 display_all(category, data_list)
-                cont = input("Contine? (Y/N)...")
+                cont = input("Continue? (Y=continue AnyKey=Main Menu)...")
                 if cont.lower() != "y":
                     loading()
                     break

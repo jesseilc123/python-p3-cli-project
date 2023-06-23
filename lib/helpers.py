@@ -72,6 +72,7 @@ def loading():
     os.system("clear")
 
 def no_matches_found():
+    print("Results: ")
     print("------------------")
     print("No matches found")
     print("------------------")
@@ -133,26 +134,32 @@ def search_for_players(data_list, search_name):
             os.system("clear")
         elif player_relations == "1":
             loading()
-            print("Results: ")
-            print("------------------")
-            for world in player_lookup_list.worlds:
-                print(f"Name: {world.name} | " +\
-                    f"Seed: {world.seed} | " +\
-                    f"Spawn: {world.spawn} | " +\
-                    f"Players: {world.player_count}")
-            print("------------------")
-            input("Press any key to continue...")
-            loading()
+            if len(player_lookup_list.worlds) == 0:
+                no_matches_found()
+            else:
+                print("Results: ")
+                print("------------------")
+                for world in player_lookup_list.worlds:
+                    print(f"Name: {world.name} | " +\
+                        f"Seed: {world.seed} | " +\
+                        f"Spawn: {world.spawn} | " +\
+                        f"Players: {world.player_count}")
+                print("------------------")
+                input("Press any key to continue...")
+                loading()
         elif player_relations == "2":
             loading()
-            print("Results: ")
-            print("------------------")
-            for server in player_lookup_list.servers:
-                print(f"Server Name: {server.server_name} | " +\
-                    f"Server IP: {server.server_ip} | ")
-            print("------------------")
-            input("Press any key to continue...")
-            loading()
+            if len(player_lookup_list.servers)== 0:
+                no_matches_found()
+            else:   
+                print("Results: ")
+                print("------------------")
+                for server in player_lookup_list.servers:
+                    print(f"Server Name: {server.server_name} | " +\
+                        f"Server IP: {server.server_ip} | ")
+                print("------------------")
+                input("Press any key to continue...")
+                loading()
         else:
             invalid_input()
 
@@ -174,26 +181,33 @@ def search_for_worlds(data_list, search_name):
             os.system("clear")
         elif world_relations == "1":
             loading()
-            print("Results: ")
-            print("------------------")
-            for player in world_lookup_list.players:
-                print(f"Username: {player.user_name} | " +\
-                    f"Role: {player.role} | " +\
-                    f"Experience: {player.exp} | " +\
-                    f"Skin: {player.skin}")
-            print("------------------")
-            input("Press any key to continue...")
-            os.system("clear")
+            if len(world_lookup_list.players) == 0:
+                no_matches_found()
+            else:
+                print("Results: ")
+                print("------------------")
+                for player in world_lookup_list.players:
+                    print(f"Username: {player.user_name} | " +\
+                        f"Role: {player.role} | " +\
+                        f"Experience: {player.exp} | " +\
+                        f"Skin: {player.skin}")
+                print("------------------")
+                input("Press any key to continue...")
+                os.system("clear")
         elif world_relations == "2":
             loading()
-            print("Results: ")
-            print("------------------")
-            for server in world_lookup_list.servers:
-                print(f"Server Name: {server.server_name} | " +\
-                    f"Server IP: {server.server_ip} | ")
-            print("------------------")
-            input("Press any key to continue...")
-            os.system("clear")
+            if len(world_lookup_list.servers) == 0:
+                no_matches_found()
+            else:
+                
+                print("Results: ")
+                print("------------------")
+                for server in world_lookup_list.servers:
+                    print(f"Server Name: {server.server_name} | " +\
+                        f"Server IP: {server.server_ip} | ")
+                print("------------------")
+                input("Press any key to continue...")
+                os.system("clear")
         else:
             invalid_input()
 
