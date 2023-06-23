@@ -85,6 +85,24 @@ def invalid_input():
     time.sleep(1)
     os.system("clear")
 
+def print_players(data):
+    print(f"Username: {data.user_name} | " +\
+    f"Role: {data.role} | " +\
+    f"Experience: {data.exp} | " +\
+    f"Skin: {data.skin} | " +\
+    f"ID: {data.id} |")
+
+def print_worlds(data):
+    print(f"Name: {data.name} | " +\
+    f"Seed: {data.seed} | " +\
+    f"Spawn: {data.spawn} | " +\
+    f"Players: {data.player_count} | " +\
+    f"ID: {data.id} |")
+
+def print_servers(data):
+        print(f"Name: {data.server_name} | " +\
+        f"IP address: {data.server_ip} |")
+
 def display_all(category, data_list):
     os.system("clear")
     print("Getting results: ")
@@ -92,17 +110,11 @@ def display_all(category, data_list):
     time.sleep(1)
     if category == "player":
         for data in session.query(data_list).all():
-            print(f"Username: {data.user_name} | " +\
-                f"Role: {data.role} | " +\
-                f"Experience: {data.exp} | " +\
-                f"Skin: {data.skin}")
+            print_players(data)
         print("------------------")
     elif category == "world":
         for data in session.query(data_list).all():
-            print(f"Name: {data.name} | " +\
-                f"Seed: {data.seed} | " +\
-                f"Spawn: {data.spawn} | " +\
-                f"Players: {data.player_count}")
+            print_worlds(data)
         print("------------------")
     elif category == "server":
         new_serverlist = []
@@ -111,8 +123,7 @@ def display_all(category, data_list):
                 new_serverlist.append(data.server_name)
         for item in new_serverlist:
             items_to_print = session.query(data_list).filter(data_list.server_name==item).first()
-            print(f"Name: {items_to_print.server_name} | " +\
-                f"IP address: {items_to_print.server_ip}")
+            print_servers(items_to_print)
         print("------------------")
         
 
@@ -123,10 +134,7 @@ def search_for_players(data_list, search_name):
     else:
         print("Results: ")
         print("------------------")
-        print(f"Username: {player_lookup_list.user_name} | " +\
-            f"Role: {player_lookup_list.role} | " +\
-            f"Experience: {player_lookup_list.exp} | " +\
-            f"Skin: {player_lookup_list.skin}")
+        print_players(player_lookup_list)
         print("------------------")
         player_relations = input("Would you like to see related worlds or servers? " + \
             "(0=no 1=worlds 2=servers)...")
@@ -140,10 +148,7 @@ def search_for_players(data_list, search_name):
                 print("Results: ")
                 print("------------------")
                 for world in player_lookup_list.worlds:
-                    print(f"Name: {world.name} | " +\
-                        f"Seed: {world.seed} | " +\
-                        f"Spawn: {world.spawn} | " +\
-                        f"Players: {world.player_count}")
+                    print_worlds(world)
                 print("------------------")
                 input("Press any key to continue...")
                 loading()
@@ -155,8 +160,7 @@ def search_for_players(data_list, search_name):
                 print("Results: ")
                 print("------------------")
                 for server in player_lookup_list.servers:
-                    print(f"Server Name: {server.server_name} | " +\
-                        f"Server IP: {server.server_ip} | ")
+                    print_servers(server)
                 print("------------------")
                 input("Press any key to continue...")
                 loading()
@@ -170,10 +174,7 @@ def search_for_worlds(data_list, search_name):
     else:
         print("Results: ")
         print("------------------")
-        print(f"Name: {world_lookup_list.name} | " +\
-            f"Seed: {world_lookup_list.seed} | " +\
-            f"Spawn: {world_lookup_list.spawn} | " +\
-            f"Players: {world_lookup_list.player_count}")
+        print_worlds(world_lookup_list)
         print("------------------")
         world_relations = input("Would you like to see related players or servers? " + \
             "(0=no 1=players 2=servers)...")
@@ -187,10 +188,7 @@ def search_for_worlds(data_list, search_name):
                 print("Results: ")
                 print("------------------")
                 for player in world_lookup_list.players:
-                    print(f"Username: {player.user_name} | " +\
-                        f"Role: {player.role} | " +\
-                        f"Experience: {player.exp} | " +\
-                        f"Skin: {player.skin}")
+                    print_players(player)
                 print("------------------")
                 input("Press any key to continue...")
                 os.system("clear")
@@ -203,8 +201,7 @@ def search_for_worlds(data_list, search_name):
                 print("Results: ")
                 print("------------------")
                 for server in world_lookup_list.servers:
-                    print(f"Server Name: {server.server_name} | " +\
-                        f"Server IP: {server.server_ip} | ")
+                    print_servers(server)
                 print("------------------")
                 input("Press any key to continue...")
                 os.system("clear")
@@ -217,9 +214,8 @@ def search_for_servers(data_list, search_name):
         no_matches_found()
     else:
         print("Results: ")
-        print("------------------")       
-        print(f"Server Name: {server_lookup_list.server_name} | " +\
-            f"Server IP: {server_lookup_list.server_ip} | ")
+        print("------------------")  
+        print_servers(server_lookup_list)
         print("------------------")
         server_relations = input("Would you like to see related players or worlds?" + \
             "(0=no 1=players 2=worlds)...")
@@ -240,10 +236,7 @@ def search_for_servers(data_list, search_name):
                     print("------------------") 
                     for player_id in player_id_server_list:
                         player = session.query(Player).filter(Player.id==player_id).first()
-                        print(f"Username: {player.user_name} | " +\
-                            f"Role: {player.role} | " +\
-                            f"Experience: {player.exp} | " +\
-                            f"Skin: {player.skin}")
+                        print_players(player)
                     print("------------------")
                     input("Press any key to continue...")
                     os.system("clear")
@@ -264,10 +257,7 @@ def search_for_servers(data_list, search_name):
                     print("------------------") 
                     for world_id in world_id_server_list:
                         world = session.query(World).filter(World.id==world_id).first()
-                        print(f"Name: {world.name} | " +\
-                            f"Seed: {world.seed} | " +\
-                            f"Spawn: {world.spawn} | " +\
-                            f"Players: {world.player_count}")
+                        print_worlds(world)
                     print("------------------")
                     input("Press any key to continue...")
                     os.system("clear")
@@ -332,10 +322,7 @@ def add_to_player():
     loading()
     print("Here is your new player!")
     print("------------------")
-    print(f"Username: {print_new_player.user_name} | " +\
-        f"Role: {print_new_player.role} | " +\
-        f"Experience: {print_new_player.exp} | " +\
-        f"Skin: {print_new_player.skin}")
+    print_players(print_new_player)
     print("------------------")
     input("Press any key to continue...")
     os.system("clear")
@@ -399,10 +386,7 @@ def add_to_world():
     loading()
     print("Here is your new world!")
     print("------------------")
-    print(f"Name: {print_new_world.name} | " +\
-        f"Seed: {print_new_world.seed} | " +\
-        f"Spawn: {print_new_world.spawn} | " +\
-        f"Players: {print_new_world.player_count}")
+    print_worlds(print_new_world)
     print("------------------")
     input("Press any key to continue...")
     os.system("clear")
@@ -470,8 +454,9 @@ def add_to_server():
     print("------------------")
     print(f"Name: {print_new_server.server_name} | " +\
         f"IP address: {print_new_server.server_ip} | " +\
+        f"ID: {print_new_server.id} | " +\
         f"Player ID: {print_new_server.player_id} | " +\
-        f"World ID: {print_new_server.world_id}")
+        f"World ID: {print_new_server.world_id} |")
     print("------------------")
     input("Press any key to continue...")
     os.system("clear")
