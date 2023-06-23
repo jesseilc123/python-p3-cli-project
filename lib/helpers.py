@@ -250,22 +250,51 @@ def search_for_servers(data_list, search_name):
             invalid_input()
 
 def add_to_player():
-    new_user_name = input("Please enter name: ")
-    new_role = input("Please enter role: ")
-    new_exp = input("Please enter experience level: ")
-    new_skin = input("Please enter skin: ")
+    os.system("clear")
+    while True:
+        new_user_name = input("Please enter name: ")
+        if len(new_user_name) == 0:
+            os.system("clear")
+            print("Error!!! Please enter a name.")
+            time.sleep(1)
+            os.system("clear")
+            continue
+        os.system("clear")
+        break
+    while True:
+        new_role = input("Please enter role (Admin or Player): ")
+        if new_role.lower() != "admin" and new_role.lower() != "player":
+            os.system("clear")
+            print("Error!!! Please enter a valid Role (Admin or Player).")
+            time.sleep(1)
+            os.system("clear")
+            continue
+        os.system("clear")
+        break
+    while True:
+        new_exp = input("Please enter experience level: ")
+        if new_exp.isdigit() == False:
+            os.system("clear")
+            print("Error!!! Please enter a valid experience level.")
+            time.sleep(1)
+            os.system("clear")
+            continue
+        os.system("clear")
+        break
+    while True:
+        new_skin = input("Please enter skin: ")
+        if len(new_skin) == 0:
+            os.system("clear")
+            print("Error!!! Please enter a skin.")
+            time.sleep(1)
+            os.system("clear")
+            continue
+        os.system("clear")
+        break
 
-    if len(new_user_name) == 0:
-        print("!!Invalid user name, please try again!!")
-    if len(new_role) == 0:
-        print("!!Invalid role, please try again!!")
-    if not isinstance(new_exp, int):
-        print("!!Invalid experience, please try again!!")
-    if len(new_skin)== 0:
-        print("!!Invalid skin, please try again!!")
     player = Player(
         user_name=new_user_name,
-        role=new_role,
+        role=new_role.title(),
         exp=new_exp,
         skin=new_skin
     )
@@ -295,8 +324,10 @@ def add_to_world():
 def add_to_server():
     new_server_name = input("Please enter server name: ")
     new_server_ip = input("Please enter server ip: ")
+    new_server_ip = int(new_server_ip)
     new_player_id = input("Please enter player id: ")
     new_world_id = input("Please enter world id: ")
+
     server = Server(
         server_name=new_server_name,
         server_ip=new_server_ip,
