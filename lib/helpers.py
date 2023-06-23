@@ -296,13 +296,23 @@ def add_to_player():
         user_name=new_user_name,
         role=new_role.title(),
         exp=new_exp,
-        skin=new_skin
+        skin=new_skin.title()
     )
 
     session.add(player)
     session.commit()
 
-    print(session.query(Player).order_by(desc(Player.id)).first())
+    print_new_player = session.query(Player).order_by(desc(Player.id)).first()
+    loading()
+    print("Here is your new player!")
+    print("------------------")
+    print(f"Username: {print_new_player.user_name} | " +\
+    f"Role: {print_new_player.role} | " +\
+    f"Experience: {print_new_player.exp} | " +\
+    f"Skin: {print_new_player.skin}")
+    print("------------------")
+    input("Press any key to continue...")
+    os.system("clear")
 
 def add_to_world():
     new_name = input("Please enter name: ")
