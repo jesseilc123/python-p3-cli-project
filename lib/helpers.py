@@ -315,6 +315,7 @@ def add_to_player():
     os.system("clear")
 
 def add_to_world():
+    os.system("clear")
     while True:
         new_name = input("Please enter name: ")
         if len(new_name) == 0:
@@ -337,7 +338,9 @@ def add_to_world():
         break  
     while True:          
         new_spawn = input("Please enter spawn point: ")
-        if new_spawn.isdigit() == False:
+        try:
+            int(new_spawn)
+        except ValueError:
             os.system("clear")
             print("Error!!! Please enter a valid spawn point.")
             time.sleep(1)
@@ -347,8 +350,7 @@ def add_to_world():
         break 
     while True: 
         new_player_count = input("Please enter player count: ")
-        new_spawn = input("Please enter spawn point: ")
-        if new_spawn.isdigit() == False:
+        if new_player_count.isdigit() == False:
             os.system("clear")
             print("Error!!! Please enter a valid player count.")
             time.sleep(1)
@@ -369,7 +371,7 @@ def add_to_world():
 
     print_new_world = session.query(World).order_by(desc(World.id)).first()
     loading()
-    print("Here is your new player!")
+    print("Here is your new world!")
     print("------------------")
     print(f"Name: {print_new_world.name} | " +\
         f"Seed: {print_new_world.seed} | " +\
