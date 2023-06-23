@@ -382,12 +382,47 @@ def add_to_world():
     os.system("clear")
 
 def add_to_server():
-    new_server_name = input("Please enter server name: ")
-    new_server_ip = input("Please enter server ip: ")
-    new_server_ip = int(new_server_ip)
-    new_player_id = input("Please enter player id: ")
-    new_world_id = input("Please enter world id: ")
-
+    os.system("clear")
+    while True:
+        new_server_name = input("Please enter server name: ")
+        if len(new_server_name) == 0:
+            os.system("clear")
+            print("Error!!! Please enter a name.")
+            time.sleep(1)
+            os.system("clear")
+            continue
+        os.system("clear")
+        break
+    while True:           
+        new_server_ip = input("Please enter server ip: ")
+        if new_server_ip.isdigit() == False:
+            os.system("clear")
+            print("Error!!! Please enter a valid server ip.")
+            time.sleep(1)
+            os.system("clear")
+            continue
+        os.system("clear")
+        break 
+    while True:
+        new_player_id = input("Please enter player id: ")
+        if new_player_id.isdigit() == False or new_player_id == "0":
+            os.system("clear")
+            print("Error!!! Please enter a valid player id.")
+            time.sleep(1)
+            os.system("clear")
+            continue
+        os.system("clear")
+        break
+    while True:
+        new_world_id = input("Please enter world id: ")
+        if new_world_id.isdigit() == False or new_world_id == "0":
+            os.system("clear")
+            print("Error!!! Please enter a valid world id.")
+            time.sleep(1)
+            os.system("clear")
+            continue
+        os.system("clear")
+        break
     server = Server(
         server_name=new_server_name,
         server_ip=new_server_ip,
