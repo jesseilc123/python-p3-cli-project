@@ -308,6 +308,8 @@ def add_to_world():
 def add_to_server():
     os.system("clear")
     disclaimer_for_add_to_server()
+    input("press any key to continue:")
+    os.system("clear")
     while True:
         new_server_name = input("Please enter server name (cannot be blank): ")
         if len(new_server_name) == 0:

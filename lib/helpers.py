@@ -98,5 +98,5 @@ def disclaimer_for_add_to_server():
     print("***DISCLAIMER***\n"
         "If adding a new player or world to an existing server,\n"
         "please enter the existing server name and ip address in\n"
-        "their respected fields.\n"
+        "their respective fields.\n"
         "*******************\n")
