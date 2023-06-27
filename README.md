@@ -41,11 +41,13 @@ Usage of the CLI program was intended to be simple and straightforward. Instruct
 ### lib
 
 **cli.py**
+
 `cli.py` is the main file which actually runs the script. In this file you will find 2 supporting files which are imported from `helpers.py` and `sub_menu_helpers.py`. `helpers.py` was intended to keep code DRY so we will discuss it later. The main function of `cli.py` is `main_menu()`. This function sets a while loop to run the program until the user selects 4. Once 4 is selected the while loop ends and the program is terminated. Depending on the other numbers selected by the user (1, 2, or 3) they will be directed to a new menu known as a sub menu through the `sub_menu()` function. If the user enters a keystroke that is not 1, 2, 3, or 4 they will be presented with an error however, the while loop will not break and will remain in `main_menu()`. 
 
 The `sub_menu()` function takes 2 arguments as its parameters; a `category` and `data_list`. The category will match the data being passed down. `sub_menu()` holds another while loop where if the user selects 4 the loop will break and they will be directed to the `main_menu()`. Depending on the number the user selects, a different function will be called. If the user enters a key that is not 1, 2, 3, or 4 they will be presented with an error however, the while loop will not break and will remain in the `sub_menu()`.
 
-**sub_menu_helpers.py**
+**--sub_menu_helpers.py--**
+
 Option 1 calls the function `display_all()` which takes 2 parameters; a `category` and `data_list`. This function will query the data and display all the data depending on the `sub_menu()` selected; player, world, or server. The user will then be prompted to continue or go back to the `main_menu()`. Selecting to return to the `main_menu()` will result in the  loop breaking. Otherwise the `sub_menu()` while loop will continue.
 
 Option 2 calls one of the following functions depending on the `category`; `search_for_players()`, `search_for_worlds()`, `search_for_servers()`. All 3 take 2 parameters; a `data_list` and a `search_name`. 
@@ -58,7 +60,7 @@ The `search_for_servers()` function function will query the servers table for an
 
 Option 3 from the `sub_menu()` calls one of the following functions depending on the category: `add_to_player()`, `add_to_world()`, `add_to_server()`. These functions do not take any parameters. All 3 functions add a new item to their respective tables. Each question enters the user into a while loop. If the user enters information that satisfies the requirements of the question the while loop breaks and the next question is prompted. This happens until all questions have been answered and then the user is prompted with the item they added and return to the `sub_menu()`. If at any point the user enters inputs anything that do not satisfy the question's requirements, the user will be prompted invalid input and the while loop will not break until the inputs satisfy the requirements. 
 
-**helper.py**
+**--helper.py--**
 
 `helper.py` has many functions that aim to reduce repetition and keep code DRY. 
 
@@ -83,17 +85,19 @@ Option 3 from the `sub_menu()` calls one of the following functions depending on
 
 ### lib/db
 
-**debug.py**
+**--debug.py--**
+
 The purpose of this file is to allow you to debug your database when changes are made. Imports are necessary to query the database using sqlalchemy. You can run commands such as `session.query().all` to view items in your database.
 
-**models.py**
+**--models.py--**
+
 The purpose of this file is to set up tables for your database. It also sets up a relationship between all tables using `relationship` and `association_proxy`. Server serves as a join table for Player and World. Through Servers many players can be in many worlds and many worlds can have many players. A Server can also hold many worlds and many players. 
 
-**seed.py**
+**--seed.py--**
+
 The purpose of this file is to seed your database in order to reset it or fill it with data if none is present. By using `faker` and `random` much of the data is random. Players are limited to 30, worlds are limited to 15, servers are limited to 2. However through `cli.py` and `debug.py` you can add more if you choose to.
 
 ## Conclusion
 If you want to use this project feel free too just fork and clone it. If you have any recommendations please feel free to send them my way. Thanks!
 
-[linkedin](https://www.linkedin.com/in/jesse-ilc-se2023/)
-[blog](https://dev.to/jesseilc123)
+| [linkedin](https://www.linkedin.com/in/jesse-ilc-se2023/) | [blog](https://dev.to/jesseilc123) |
