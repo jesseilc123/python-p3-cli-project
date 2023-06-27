@@ -36,11 +36,9 @@ Finally seed the data using the following command:
 
 Usage of the CLI program was intended to be simple and straightforward. Instructions are provided in each menu to help guide you. With the use of data validation, incorrect keystrokes will not break the program or database. The 'Main Menu' holds 4 options; access sub menus such as 'Player menu', 'World menu', 'Server menu', or quit the program. In each sub menu there are 4 options (data is dependant on menu; player, world, server); display all the data, lookup data by name, add data to the database, or go back to the main menu. When you lookup data by name, you have the option to see related data applied to it. 
 
-## Files
+## lib
 
-### lib
-
-**cli.py**
+**--cli.py--**
 
 `cli.py` is the main file which actually runs the script. In this file you will find 2 supporting files which are imported from `helpers.py` and `sub_menu_helpers.py`. `helpers.py` was intended to keep code DRY so we will discuss it later. The main function of `cli.py` is `main_menu()`. This function sets a while loop to run the program until the user selects 4. Once 4 is selected the while loop ends and the program is terminated. Depending on the other numbers selected by the user (1, 2, or 3) they will be directed to a new menu known as a sub menu through the `sub_menu()` function. If the user enters a keystroke that is not 1, 2, 3, or 4 they will be presented with an error however, the while loop will not break and will remain in `main_menu()`. 
 
@@ -83,7 +81,7 @@ Option 3 from the `sub_menu()` calls one of the following functions depending on
 `disclaimer_for_add_to_server()` simply print's instructions when the user adds a server. Reduces clutter in `sub_menu_helpers.py`.
 
 
-### lib/db
+## lib/db
 
 **--debug.py--**
 
