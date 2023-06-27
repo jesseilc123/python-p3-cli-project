@@ -5,7 +5,8 @@ from sqlalchemy import desc
 
 from helpers import (
     loading, no_matches_found, invalid_input,
-    print_players, print_worlds, print_servers)
+    print_players, print_worlds, print_servers,
+    disclaimer_for_add_to_server)
 
 import os
 import time
@@ -167,6 +168,7 @@ def search_for_servers(data_list, search_name):
                         input("Press any key to continue...")
                         loading()
                         break
+                break
             elif server_relations == "2":
                 loading()
                 world_id_server_list = []
@@ -189,48 +191,37 @@ def search_for_servers(data_list, search_name):
                         input("Press any key to continue...")
                         loading()
                         break
+                break
             else:
                 invalid_input()
 
 def add_to_player():
     os.system("clear")
     while True:
-        new_user_name = input("Please enter name: ")
+        new_user_name = input("Please enter name (cannot be blank): ")
         if len(new_user_name) == 0:
-            os.system("clear")
-            print("Error!!! Please enter a name.")
-            time.sleep(1)
-            os.system("clear")
+            invalid_input()
             continue
         os.system("clear")
         break
     while True:
         new_role = input("Please enter role (Admin or Player): ")
         if new_role.lower() != "admin" and new_role.lower() != "player":
-            os.system("clear")
-            print("Error!!! Please enter a valid Role (Admin or Player).")
-            time.sleep(1)
-            os.system("clear")
+            invalid_input()
             continue
         os.system("clear")
         break
     while True:
-        new_exp = input("Please enter experience level: ")
+        new_exp = input("Please enter experience level (must be integer): ")
         if new_exp.isdigit() == False:
-            os.system("clear")
-            print("Error!!! Please enter a valid experience level.")
-            time.sleep(1)
-            os.system("clear")
+            invalid_input()
             continue
         os.system("clear")
         break
     while True:
-        new_skin = input("Please enter skin: ")
+        new_skin = input("Please enter skin (cannot be blank): ")
         if len(new_skin) == 0:
-            os.system("clear")
-            print("Error!!! Please enter a skin.")
-            time.sleep(1)
-            os.system("clear")
+            invalid_input()
             continue
         os.system("clear")
         break
@@ -252,63 +243,45 @@ def add_to_player():
     print_players(print_new_player)
     print("------------------")
     input("Press any key to continue...")
-    os.system("clear")
+    loading()
 
 def add_to_world():
     os.system("clear")
     while True:
-        new_name = input("Please enter name: ")
+        new_name = input("Please enter name (cannot be blank): ")
         if len(new_name) == 0:
-            os.system("clear")
-            print("Error!!! Please enter a name.")
-            time.sleep(1)
-            os.system("clear")
+            invalid_input()
             continue
         os.system("clear")
         break
     while True:
-        new_seed = input("Please enter seed: ")
+        new_seed = input("Please enter seed (must be 6 digits): ")
         try:
             int(new_seed)
         except ValueError:
-            os.system("clear")
-            print("Error!!! Please enter a valid seed.")
-            time.sleep(1)
-            os.system("clear")
+            invalid_input()
             continue
-        if new_seed == "0" or len(new_seed) < 6:
-            os.system("clear")
-            print("Error!!! Please enter a valid seed.")
-            time.sleep(1)
-            os.system("clear")
+        if len(new_seed) != 6:
+            invalid_input()
             continue
         os.system("clear")
         break  
     while True:          
-        new_spawn = input("Please enter spawn point: ")
+        new_spawn = input("Please enter spawn point (must be an integer, can be negative): ")
         try:
             int(new_spawn)
         except ValueError:
-            os.system("clear")
-            print("Error!!! Please enter a valid spawn point.")
-            time.sleep(1)
-            os.system("clear")
+            invalid_input()
             continue
         os.system("clear")
         break 
     while True: 
-        new_player_count = input("Please enter player count: ")
+        new_player_count = input("Please enter player count (must be an integer greater than 0): ")
         if new_player_count.isdigit() == False:
-            os.system("clear")
-            print("Error!!! Please enter a valid player count.")
-            time.sleep(1)
-            os.system("clear")
+            invalid_input()
             continue
         if new_player_count == "0":
-            os.system("clear")
-            print("Error!!! Please enter a valid player count.")
-            time.sleep(1)
-            os.system("clear")
+            invalid_input()
             continue
         os.system("clear")
         break 
@@ -330,52 +303,36 @@ def add_to_world():
     print_worlds(print_new_world)
     print("------------------")
     input("Press any key to continue...")
-    os.system("clear")
+    loading()
 
 def add_to_server():
     os.system("clear")
-    print("***DISCLAIMER***\n"
-        "If adding a new player or world to an existing server,\n"
-        "please enter the existing server name and ip address in\n"
-        "their respected fields.\n"
-        "*******************\n")
+    disclaimer_for_add_to_server()
     while True:
-        new_server_name = input("Please enter server name: ")
+        new_server_name = input("Please enter server name (cannot be blank): ")
         if len(new_server_name) == 0:
-            os.system("clear")
-            print("Error!!! Please enter a name.")
-            time.sleep(1)
-            os.system("clear")
+            invalid_input()
             continue
         os.system("clear")
         break
     while True:           
-        new_server_ip = input("Please enter server ip: ")
-        if new_server_ip.isdigit() == False or new_server_ip == "0" or len(new_server_ip) < 5:
-            os.system("clear")
-            print("Error!!! Please enter a valid server ip.")
-            time.sleep(1)
-            os.system("clear")
+        new_server_ip = input("Please enter server ip (must be 5 digits): ")
+        if new_server_ip.isdigit() == False or len(new_server_ip) != 5:
+            invalid_input()
             continue
         os.system("clear")
         break 
     while True:
-        new_player_id = input("Please enter player id: ")
+        new_player_id = input("Please enter player id (must be an integer greater than 0): ")
         if new_player_id.isdigit() == False or new_player_id == "0":
-            os.system("clear")
-            print("Error!!! Please enter a valid player id.")
-            time.sleep(1)
-            os.system("clear")
+            invalid_input()
             continue
         os.system("clear")
         break
     while True:
-        new_world_id = input("Please enter world id: ")
+        new_world_id = input("Please enter world id (must be an integer greater than 0): ")
         if new_world_id.isdigit() == False or new_world_id == "0":
-            os.system("clear")
-            print("Error!!! Please enter a valid world id.")
-            time.sleep(1)
-            os.system("clear")
+            invalid_input()
             continue
         os.system("clear")
         break
@@ -400,4 +357,4 @@ def add_to_server():
         f"World ID: {print_new_server.world_id} |")
     print("------------------")
     input("Press any key to continue...")
-    os.system("clear")
+    loading()

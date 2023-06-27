@@ -29,7 +29,7 @@ def closing_logo():
     ⠀⠀⠀⠀⢰⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣿⣿⣿⠀
     """)
 
-def closing():
+def closing_tag():
     os.system("clear")
     print("Program Terminated")
     closing_logo()
@@ -44,7 +44,7 @@ def main_menu_options():
         print("1) Player menu")
         print("2) World menu")
         print("3) Server menu")
-        print("4) Exit")
+        print("4) Quit")
         print("")
 
 def sub_menu_options(category):
@@ -72,7 +72,7 @@ def no_matches_found():
 
 def invalid_input():
     os.system("clear")
-    print("Invalid input, please try again!")
+    print("Error!!! Invalid input, please try again!")
     time.sleep(1)
     os.system("clear")
 
@@ -93,3 +93,10 @@ def print_worlds(data):
 def print_servers(data):
         print(f"Name: {data.server_name} | " +\
         f"IP address: {data.server_ip} |")
+
+def disclaimer_for_add_to_server():
+    print("***DISCLAIMER***\n"
+        "If adding a new player or world to an existing server,\n"
+        "please enter the existing server name and ip address in\n"
+        "their respected fields.\n"
+        "*******************\n")

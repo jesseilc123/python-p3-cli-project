@@ -4,7 +4,7 @@ from sub_menu_helpers import (
     add_to_server, add_to_world)
 from helpers import (
     logo, loading, invalid_input, main_menu_options,
-    sub_menu_options, closing)
+    sub_menu_options, closing_tag)
 
 from db.models import Player, World, Server
 
@@ -42,7 +42,7 @@ if __name__ == '__main__':
             else:
                 invalid_input()
                 main_menu()
-        closing()
+        closing_tag()
 
     def sub_menu(category, data_list):
         sub_choice = 0
